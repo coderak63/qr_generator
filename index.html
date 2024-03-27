@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport"
+		content="width=device-width,
+						initial-scale=1.0" />
+	<title>QR Code Generator</title>
+	
+	<style>
+		body {
+			background-color: #bcd9f5;
+			}
+			/* nav */
+			.card {
+			max-width: 100%;
+			padding: 0;
+			border: none;
+			border-radius: 0.5rem;
+			}
+
+			a.active {
+			border-bottom: 2px solid #55c57a;
+			}
+
+			.nav-link {
+			color: rgb(110, 110, 110);
+			font-weight: 500;
+			}
+			.nav-link:hover {
+			color: #55c57a;
+			}
+
+			.nav-pills .nav-link.active {
+			color: black;
+			background-color: white;
+			border-radius: 0.5rem 0.5rem 0 0;
+			font-weight: 600;
+			}
+
+			.tab-content {
+			padding-bottom: 1.3rem;
+			}
+
+			.form-control {
+			background-color: rgb(241, 243, 247);
+			border: none;
+			}
+
+			/* 3nd card */
+			span {
+			margin-left: 0.5rem;
+			padding: 1px 10px;
+			color: white;
+			background-color: rgb(143, 143, 143);
+			border-radius: 4px;
+			font-weight: 600;
+			}
+
+			.tab-pane {
+			padding: 0 1.5rem 0 1.5rem;
+			}
+
+			label {
+			font-weight: 400;
+			color: black;
+			}
+
+			.btn-success {
+			margin-top:10px;
+			float: right;
+			}
+
+			.form-control:focus {
+			box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 7px rgba(0, 0, 0, 0.2);
+			}
+
+			select {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			text-indent: 1px;
+			text-overflow: "";
+			}
+
+			/* 1st card */
+
+			ul {
+			list-style: none;
+			margin-top: 1rem;
+			padding-inline-start: 0;
+			}
+
+			.search {
+			padding: 0 1rem 0 1rem;
+			}
+
+
+
+			.ccontent li:hover {
+			background-color: rgb(117, 93, 255);
+			color: white;
+			}
+
+			/* 2nd card */
+
+			.addinfo {
+			padding: 0 1rem;
+			}
+
+			#qrcode img{
+				margin:0 auto;
+			}
+
+			#downloadImgBtn,#copyImgBtn{
+				border: none;
+			}
+
+			#download-icon,#copy-icon{
+				height: 2rem;
+				width: 2rem;
+			}
+
+			#download-icon:hover,#copy-icon:hover{
+				transform: scale(1.1);
+			}
+
+			.side-nav .nav-item .nav-link{
+				padding-left: 16px;
+			}
+
+			
+
+
+
+	</style>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+	
+		<div class="container-fluid">
+			<div class="row">
+			
+				<div class="col-lg-2 border-right">
+					<div class="row">
+						<div class="col-lg-12 border-bottom text-center pt-2" style="min-height:64px;">
+							<h2 style="color:#689f38;">AbhiTech<sub style="font-size: small;">Tools</sub></h2>
+						</div>
+					</div>
+
+					<div class="row border-bottom">
+						<nav class ="navbar side-nav">
+							<ul class ="nav navbar-nav side-nav">
+								<li class ="nav-item py-2">
+									<a class ="nav-link" href="#"> Sign In </a>
+								</li>
+								<li class ="nav-item py-2">
+									<a class ="nav-link" href="#"> Register </a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+
+					<div class="row">
+						
+						<div class="w-100">
+						  <div class="list-group" id="list-tab">
+							<a class="list-group-item list-group-item-action" id="list-qr-generator" href="#qr-generator">QR Code Generator</a>
+							<a class="list-group-item list-group-item-action" id="list-barcode-generator" href="#barcode-generator">Barcode Generator</a>
+							<!-- <a class="list-group-item list-group-item-action" id="list-messages-list" href="#list-messages">Messages</a>
+							<a class="list-group-item list-group-item-action" id="list-settings-list" href="#list-settings">Settings</a> -->
+						  </div>
+						</div>
+						
+					</div>
+
+					<!-- <div class="row border-bottom">
+						<nav class ="navbar">
+							<ul class ="nav navbar-nav side-nav">
+								<li class ="nav-item py-1">
+									<a class ="nav-link" href="#"> Home </a>
+								</li>
+								<li class ="nav-item py-1">
+									<a class ="nav-link" href="#"> Services </a>
+								</li>
+								<li class ="nav-item py-1">
+									<a class ="nav-link" href="#"> Contact </a>
+								</li>
+								<li class ="nav-item py-1">
+									<a class ="nav-link" href="#"> About </a>
+								</li>
+							</ul>
+						</nav>
+					</div> -->
+					
+				</div>
+				
+				<div class="col-lg-10"> 
+					<div class="row">
+						<div class="col-lg-12 shadow-lg d-flex" style="min-height:64px;padding-left: 24px;padding-top: 14px;background-color: #689f38;">
+							<h4 style="color:#fff">QR Code Generator</h4>
+						</div>
+					</div>
+					<div class="row">
+
+						<div class="col-lg-7 border-right">
+							<div class="container-fluid">
+								<div class="card shadow justify-content-center mt-5">
+									<!-- nav options -->
+									<ul class="nav nav-pills mb-3 shadow-sm" id="pills-tab" role="tablist">
+									  <li class="nav-item">
+										<a class="nav-link active" id="pills-text-tab" data-toggle="pill" href="#pills-text" role="tab" aria-controls="pills-text" aria-selected="true">Text</a>
+									  </li>
+									  <li class="nav-item">
+										<a class="nav-link" id="pills-url-tab" data-toggle="pill" href="#pills-url" role="tab" aria-controls="pills-url" aria-selected="false">URL</a>
+									  </li>
+									  <li class="nav-item">
+										<a class="nav-link" id="pills-phone-tab" data-toggle="pill" href="#pills-phone" role="tab" aria-controls="pills-phone" aria-selected="false">Phone</a>
+									  </li>
+									  <li class="nav-item">
+										<a class="nav-link" id="pills-sms-tab" data-toggle="pill" href="#pills-sms" role="tab" aria-controls="pills-sms" aria-selected="false">SMS</a>
+									  </li>
+									  <li class="nav-item">
+										<a class="nav-link" id="pills-email-tab" data-toggle="pill" href="#pills-email" role="tab" aria-controls="pills-email" aria-selected="false">Email</a>
+									  </li>
+									  <li class="nav-item">
+										<a class="nav-link" id="pills-wifi-tab" data-toggle="pill" href="#pills-wifi" role="tab" aria-controls="pills-wifi" aria-selected="false">Wifi</a>
+									  </li>
+									  <li class="nav-item">
+										<a class="nav-link" id="pills-calendar-tab" data-toggle="pill" href="#pills-calendar" role="tab" aria-controls="pills-calendar" aria-selected="false">Calendar</a>
+									  </li>
+									  <li class="nav-item">
+										<a class="nav-link" id="pills-vcard-tab" data-toggle="pill" href="#pills-vcard" role="tab" aria-controls="pills-vcard" aria-selected="false">vCard</a>
+									  </li>
+									</ul>
+				  
+									<!-- content -->
+									<div class="tab-content" id="pills-tabContent p-3">
+									  <!-- 1st card -->
+									  <div class="tab-pane fade show active" id="pills-text" role="tabpanel" aria-labelledby="pills-text-tab">
+										<div class="form-group">
+										  <label for="text_input">Type Plain Text Here:</label>
+										  <textarea class="form-control" id="text_input" rows="3"></textarea>
+										  <button onclick="changeQR(1)" class="btn btn-success">Get QR</button>
+										</div>
+										
+									  </div>
+									  <!-- 2nd card -->
+									  <div class="tab-pane fade" id="pills-url" role="tabpanel" aria-labelledby="pills-url-tab">
+										<div class="form-group">
+										  <label for="url_input">Type URL Here:</label>
+										  <textarea class="form-control" id="url_input" rows="2"></textarea>
+										  <button onclick="changeQR(2)" class="btn btn-success">Get QR</button>
+										</div>
+									  </div>
+									  
+									  <!-- 3rd card -->
+									  <div class="tab-pane fade" id="pills-phone" role="tabpanel" aria-labelledby="pills-phone-tab">
+										<div class="form-group">
+										  <label for="phone_input">Phone Number:</label>
+										  <input type="tel" class="form-control" id="phone_input" />
+										  <button onclick="changeQR(3)" class="btn btn-success">Get QR</button>
+										</div>
+									  </div>
+									  
+									  <!-- 4th card -->
+									  <div class="tab-pane fade" id="pills-sms" role="tabpanel" aria-labelledby="pills-sms-tab">
+										<div class="form-group">
+										  <label for="sms_input_phone">Phone Number:</label>
+										  <input type="tel" class="form-control" id="sms_input_phone" />
+										  <label for="sms_input">Type your message:</label>
+										  <textarea class="form-control" id="sms_input" rows="3"></textarea>
+										  <button onclick="changeQR(4)" class="btn btn-success">Get QR</button>
+										</div>
+									  </div>
+									  
+									  <!-- 5th card -->
+									  <div class="tab-pane fade" id="pills-email" role="tabpanel" aria-labelledby="pills-email-tab">
+										<div class="form-group">
+										  <label for="email_input_address">Email Address:</label>
+										  <input type="email" class="form-control" id="email_input_address" />
+										  <label for="email_input_subject">Subject:</label>
+										  <input type="text" class="form-control" id="email_input_subject" />
+										  <label for="email_input_body">Message Body:</label>
+										  <textarea class="form-control" id="email_input_body" rows="4"></textarea>
+										  <button onclick="changeQR(5)" class="btn btn-success">Get QR</button>
+										</div>
+									  </div>
+									  
+									  <!-- 6th card -->
+									  <div class="tab-pane fade" id="pills-wifi" role="tabpanel" aria-labelledby="pills-wifi-tab">
+										<div class="form-group">
+											<label for="wifi_input_ssid">SSID:</label>
+											<input type="text" class="form-control" id="wifi_input_ssid" />
+											<label for="wifi_input_password">Password:</label>
+											<input type="text" class="form-control" id="wifi_input_password" />
+
+											<label for="wifi_input_encryption">Encryption:</label><br/>
+											<label class="radio-inline ml-3">
+												<input type="radio" name="wifi_input_encryption" value="none" checked>&nbsp;None&nbsp;&nbsp;
+											  </label>
+											  <label class="radio-inline">
+												<input type="radio" name="wifi_input_encryption" value="WPA">&nbsp;WPA/WPA2&nbsp;&nbsp;
+											  </label>
+											  <label class="radio-inline">
+												<input type="radio" name="wifi_input_encryption" value="WEP">&nbsp;WEP&nbsp;&nbsp;
+											</label>
+
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" value="" id="wifi_input_hidden">
+												<label class="form-check-label" for="wifi_input_hidden">
+												  WiFi network is hidden
+												</label>
+											</div>
+
+											<button onclick="changeQR(6)" class="btn btn-success">Get QR</button>
+										</div>
+									  </div>
+									  
+									  <!-- 7th card -->
+									  <div class="tab-pane fade" id="pills-calendar" role="tabpanel" aria-labelledby="pills-calendar-tab">
+										<div class="form-group">
+										  <label for="exampleFormControlTextarea1">Write additional info.</label>
+										  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+										  <button class="btn btn-success">Insert</button>
+										</div>
+									  </div>
+									  
+									  <!-- 8th card -->
+									  <div class="tab-pane fade" id="pills-vcard" role="tabpanel" aria-labelledby="pills-vcard-tab">
+										<div class="form">
+										  <div class="form-group">
+											<label>Your Name:</label>
+											<div class="row">
+												<div class="col-lg-6 col-sm-12">
+													<input type="text" class="form-control my-2" id="vcard_input_first_name" placeholder="First Name"/>
+												</div>
+												<div class="col-lg-6 col-sm-12">
+													<input type="text" class="form-control my-2" id="vcard_input_last_name" placeholder="Last Name"/>
+												</div>
+											</div>
+
+											<label for="vcard_input_mobile">Contact:</label>
+										  	<input type="text" class="form-control my-2" id="vcard_input_mobile" placeholder="Mobile"/>
+											<div class="row">
+												<div class="col-lg-6 col-sm-12">
+													<input type="text" class="form-control my-2" id="vcard_input_phone" placeholder="Phone"/>
+												</div>
+												<div class="col-lg-6 col-sm-12">
+													<input type="text" class="form-control my-2" id="vcard_input_fax" placeholder="Fax"/>
+												</div>
+											</div>
+
+											<label for="vcard_input_email">Email Address:</label>
+										    <input type="email" class="form-control my-2" id="vcard_input_email" placeholder="Email"/>
+
+											<label for="vcard_input_website">Website:</label>
+										    <input type="text" class="form-control my-2" id="vcard_input_website" placeholder="Website"/>
+
+											<label>Company:</label>
+											<div class="row">
+												<div class="col-lg-6 col-sm-12">
+													<input type="text" class="form-control my-2" id="vcard_input_company_name" placeholder="Company"/>
+												</div>
+												<div class="col-lg-6 col-sm-12">
+													<input type="text" class="form-control my-2" id="vcard_input_company_job" placeholder="Your Job"/>
+												</div>
+											</div>
+
+											<label for="vcard_input_address_street">Address:</label>
+										  	<input type="text" class="form-control my-2" id="vcard_input_address_street" placeholder="Street"/>
+											<div class="row">
+												<div class="col-lg-6 col-sm-12">
+													<input type="text" class="form-control my-2" id="vcard_input_address_city" placeholder="City"/>
+												</div>
+												<div class="col-lg-6 col-sm-12">
+													<input type="text" class="form-control my-2" id="vcard_input_address_state" placeholder="State"/>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-lg-8 col-sm-12">
+													<input type="text" class="form-control my-2" id="vcard_input_address_country" placeholder="Country"/>
+												</div>
+												<div class="col-lg-4 col-sm-12">
+													<input type="text" class="form-control my-2" id="vcard_input_address_pincode" placeholder="Pin Code"/>
+												</div>
+											</div>
+
+											<button onclick="changeQR(8)" class="btn btn-success">Get QR</button>
+										  </div>
+										</div>
+									  </div>
+									  
+									  
+									</div>
+								  </div>
+							</div>
+						</div>
+
+						<div class="col-lg-5">
+							<div class="container-fluid">
+								<div class="card shadow justify-content-center mt-5">
+									<div class="card-header text-center">
+										<h3>QR Code</h3>
+									</div>
+								<div class="card-body">
+									<div class="container">
+										<div id="qrcode"></div>
+									</div>
+								</div>
+								<div class="card-footer">
+									<div class="container text-center">
+										<!-- <button id="downloadImgBtn" class="btn btn-primary" onclick="downloadImg()">Download</button> -->
+										<button id="downloadImgBtn" onclick="downloadImg()" data-toggle="tooltip" data-placement="bottom" title="Download QR Code"><img id="download-icon" src="Images/download.svg"/></button>
+										<button id="copyImgBtn" onclick="copyImg()" data-toggle="tooltip" data-placement="bottom" title="Copy QR Code"><img id="copy-icon" src="Images/copy.svg"/></button>
+									</div>
+								</div>
+								</div>
+							</div>
+						</div>
+
+
+						
+
+
+
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+	
+	<script>
+		var qrcode = new QRCode("qrcode","Hi, There!");
+		function changeQR(input_type){
+			let txt = "";
+			switch (input_type) {
+
+			  case 1:
+				 txt = document.getElementById("text_input").value;
+				break;
+			  case 2:
+				 txt = document.getElementById("url_input").value;
+				 txt = 'http://'.concat(txt);
+				break;
+			  case 3:
+				 txt = document.getElementById("phone_input").value;
+				 txt = 'tel:'.concat(txt);
+				break;
+			  case 4:
+				 let sms_ph = document.getElementById("sms_input_phone").value;
+				 let sms = document.getElementById("sms_input").value;
+				 txt = 'SMSTO:'.concat(sms_ph).concat(':').concat(sms);
+				break;
+			  case 5:
+				 let email_address = document.getElementById("email_input_address").value;
+				 let email_subject = document.getElementById("email_input_subject").value;
+				 let email_body = document.getElementById("email_input_body").value;
+				 txt = 'mailto:'.concat(email_address).concat('?subject=').concat(email_subject).concat('&body=').concat(email_body);
+				break;
+			  case 6:
+			  	 let wifi_ssid = document.getElementById("wifi_input_ssid").value;
+				 let wifi_password = document.getElementById("wifi_input_password").value;
+				 let wifi_hidden = (document.getElementById("wifi_input_hidden").checked == true)?'true':'false';
+				 console.log(wifi_hidden);
+				 let wifi_encryption = document.querySelector("input[type='radio'][name=wifi_input_encryption]:checked").value;
+				 txt = 'WIFI:T:'.concat(wifi_encryption).concat(';S:').concat(wifi_ssid).concat(';P:').concat(wifi_password).concat(';H:').concat(wifi_hidden).concat(';');
+				break;
+
+			}
+			
+			qrcode.clear();
+			qrcode.makeCode(txt);
+		}
+		
+		function downloadImg(){
+			var img = document.getElementById("qrcode").getElementsByTagName('img')[0];
+			var url = img.src.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+			window.open(url);	
+			
+		}
+		
+	</script>
+</body>
+
+</html>
